@@ -15,6 +15,16 @@ import heapq
 
 
 def calculate_minimum_days(workers_capacity, activities):
+    """This function uses heapq module to create a priority queue in
+    order to make it faster to pop the greatest values and also to
+    push changed activities values but keeping them in order. Since
+    the heapq module only works as a min heap, the idea here is to
+    create a hack or workaround to turn positive numbers into negative
+    ones, in order to keep the greatest values as the first to be
+    popped out. Just after being popped out, the value it is turned
+    into a positive integer, and it is turned back into a negative one
+    just before being pushed in.
+    """
     days = 0
 
     for i, capacity in enumerate(workers_capacity):
