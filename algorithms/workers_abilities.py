@@ -11,16 +11,21 @@ perform the activities number (the second input parameter), or -1 if
 the number of activities cannot be performed by the workers (all have
 reached capacity of 0 activities).
 """
+import heapq
 
 
 def calculate_minimum_days(workers_capacity, activities):
     days = 0
 
+    for i, capacity in enumerate(workers_capacity):
+        workers_capacity[i] = -capacity
+
+    heapq.heapify(workers_capacity)
+
     while activities > 0 and workers_capacity:
-        workers_capacity.sort(reverse=True)
-        greatest_activites_capacity = workers_capacity[0]
-        activities -= greatest_activites_capacity
-        workers_capacity[0] = greatest_activites_capacity // 2
+        greatest_activities_capacity = -(heapq.heappop(workers_capacity))
+        activities -= greatest_activities_capacity
+        heapq.heappush(workers_capacity, -(greatest_activities_capacity // 2))
         if not workers_capacity[0]:
             workers_capacity.pop(0)
         days += 1
